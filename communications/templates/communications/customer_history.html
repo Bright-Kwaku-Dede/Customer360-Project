@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ customer_name }}'s Interaction History</title>
+</head>
+<body>
+    <h1>{{ customer_name }}'s Interaction History</h1>
+    <a href="{% url 'recent_interactions' %}">← Back to Recent Interactions</a>
+    <hr>
+    {% if customer_records %}
+        <ul>
+        {% for record in customer_records %}
+            <li>
+                <strong>Date:</strong> {{ record.timestamp|date:"M d, Y" }} at {{ record.timestamp|time:"H:i" }}<br>
+                <strong>Channel:</strong> {{ record.get_channel_display }}<br>
+                <strong>Direction:</strong> {{ record.get_direction_display }}<br>
+                <strong>Summary:</strong> {{ record.summary }}
+            </li>
+            <hr>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No communication records found for {{ customer_name }}.</p>
+    {% endif %}
+</body>
+</html>
